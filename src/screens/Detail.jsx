@@ -17,6 +17,9 @@ const Detail = ({ route }) => {
             location={params.location}
             likesCount={params.likesCount}
             description={params.description}  
+            liked={params.liked}
+            handleLikeClick={params.handleLikeClick}
+            postObj={params.postObj}
             inDetailedView={true}          
         />
     </SafeAreaView>

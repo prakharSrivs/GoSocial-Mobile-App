@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, Button, useColorScheme, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';  // Assuming you're using React Navigation
+import { useNavigation } from '@react-navigation/native'; 
 
 const UserProfile = () => {
   const [token, setToken] = useState('');
   const [userImage, setUserImage] = useState('');
   const [userId, setUserId] = useState('');
   const [username, setUsername] = useState('');
-  const colorScheme = useColorScheme(); // Detect light or dark mode
+  const colorScheme = useColorScheme(); 
   const isDarkMode = colorScheme === 'dark';
-  const navigation = useNavigation();  // For navigation
+  const navigation = useNavigation();  
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -29,19 +29,13 @@ const UserProfile = () => {
   }, []);
 
   const logout = async () => {
-    // Confirm logout
     Alert.alert(
       'Logout',
       'Are you sure you want to log out?',
       [
         { text: 'Cancel', style: 'cancel' },
         { text: 'OK', onPress: async () => {
-          // Clear AsyncStorage
-          await AsyncStorage.removeItem('token');
-          await AsyncStorage.removeItem('userImage');
-          await AsyncStorage.removeItem('id');
-          await AsyncStorage.removeItem('username');
-          
+          await AsyncStorage.clear()
           navigation.reset({
             index: 0,
             routes: [{ name: 'Profile' }],

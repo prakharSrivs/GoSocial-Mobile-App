@@ -3,8 +3,11 @@ import { styles } from "./styles"
 import { Description } from "./Description"
 import Icon from 'react-native-vector-icons/Feather'
 import Snackbar from 'react-native-snackbar'
+import { useEffect, useState } from "react"
 
 export const Post = ({ 
+    postObj,
+    index,
     postId,
     authorImgUri, 
     authorName, 
@@ -14,12 +17,16 @@ export const Post = ({
     postImageUri, 
     likesCount,
     handlePostClick = ()=>{},
+    handleLikeClick = ()=>{},
     inDetailedView
 }) => {
 
+    const [ isLiked, setIsLiked ] = useState(liked);
+
     const handleClick = () => {
         if( inDetailedView ) return;
-        handlePostClick(postId, authorImgUri, authorName, location, postImageUri, likesCount, description)
+        return;
+        handlePostClick(index, postObj, postId, authorImgUri, authorName, location, postImageUri, likesCount, description)
     }
 
     const handleSharePress = async () => {
@@ -32,6 +39,15 @@ export const Post = ({
             })
         }
     }
+
+    const handleLikeIconClick = ()=>{
+        setIsLiked(!liked)
+        handleLikeClick(postObj, index)
+    }
+
+    useEffect(()=>{
+        setIsLiked(liked)
+    },[liked])
 
     return (
     <TouchableOpacity style={styles.postContainer} onPress={handleClick}>
@@ -49,8 +65,19 @@ export const Post = ({
         </View>
         <View style={styles.postFooter}>
             <View style={styles.footerIconsContainer}>
-                <Icon name="thumbs-up" color={ liked ? "#FF3E4D" : "#F0F0F0" } style={styles.likeIcon} size={25} />
-                <Icon name="share-2" onPress={handleSharePress} style={styles.shareIcon} size={25} />
+                <Icon 
+                    name="thumbs-up" 
+                    color={ isLiked ? "#FF3E4D" : "#F0F0F0" } 
+                    style={styles.likeIcon} 
+                    size={25} 
+                    onPress={handleLikeIconClick}
+                />
+                <Icon 
+                    name="share-2" 
+                    onPress={handleSharePress} 
+                    style={styles.shareIcon} 
+                    size={25} 
+                />
             </View>
             {
                 likesCount>1 &&

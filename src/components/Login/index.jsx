@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 
 
 
-export default function Login() {
+export default function Login({ setShowLogin }) {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -94,6 +94,12 @@ export default function Login() {
             onPress={handleLoginRequest}  
             disabled={loading} 
         />
+        <Text 
+            style={styles.subHeaderButton} 
+            onPress={()=>setShowLogin(false)} 
+        >
+            Create an account
+        </Text>
     </View>
   )
 }
@@ -156,5 +162,12 @@ const styles = StyleSheet.create({
         paddingHorizontal:20,
         fontSize:18,
         fontFamily:"OpenSans-Regular"
+    },
+    subHeaderButton:{
+        fontSize: 14,
+        fontFamily:"Raleway-Bold",
+        color:"white",
+        marginTop:30,
+        color:"#14B3FF"
     }
 })
